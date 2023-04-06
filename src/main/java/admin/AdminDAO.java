@@ -9,7 +9,6 @@ import student.StudentInfo;
 import student.StudentInfoDAO;
 import time_operator.TimeOperator;
 
-
 /**
  * 관리자가 할 수 있는 동작들 정의하는 class
  */
@@ -21,9 +20,9 @@ public class AdminDAO {
 
     public AdminDAO() {
         try {
-            String dbURL = "jdbc:mysql://localhost:3307/DB2017029952?serverTimezone=Asia/Seoul";
+            String dbURL = "";
             String dbID = "root";
-            String dbPassword = "skyyeo83!";
+            String dbPassword = "";
             Class.forName("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection(dbURL, dbID, dbPassword);
         } catch (Exception e) {
@@ -49,9 +48,9 @@ public class AdminDAO {
             rs = pstmt.executeQuery();
             if (rs.next()) {
                 if (rs.getString(1).equals(adminPassword) && rs.getString(2).equals(adminCode)) {
-                    return 1; //로그인 성공
+                    return 1; // 로그인 성공
                 } else {
-                    return 0; //비밀번호 불일치 or code 불일치
+                    return 0; // 비밀번호 불일치 or code 불일치
                 }
             }
             return -1; // 아이디가 없음
@@ -229,7 +228,8 @@ public class AdminDAO {
      * @param roomID
      * @return
      */
-    public int createClass(String courseID, String classNO, String classID, String personMax, String year, String lecturerID, String majorID, String timeID, String begin, String end, String roomID) {
+    public int createClass(String courseID, String classNO, String classID, String personMax, String year,
+            String lecturerID, String majorID, String timeID, String begin, String end, String roomID) {
         int result = -9;
 
         TimeOperator timeOperator = new TimeOperator();

@@ -1,6 +1,5 @@
 package class_package;
 
-
 import javax.swing.text.Style;
 import java.sql.*;
 
@@ -11,9 +10,9 @@ public class ClassDAO {
 
     public ClassDAO() {
         try {
-            String dbURL = "jdbc:mysql://localhost:3307/DB2017029952?serverTimezone=Asia/Seoul";
+            String dbURL = "";
             String dbID = "root";
-            String dbPassword = "skyyeo83!";
+            String dbPassword = "";
             Class.forName("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection(dbURL, dbID, dbPassword);
         } catch (Exception e) {
@@ -24,11 +23,12 @@ public class ClassDAO {
     /**
      * 각 수업에 대하여 정원을 조절하는 방식.
      * 새로 지정하고자 하는 정원이
-     *  1. 현재 수강신청한 인원보다 많거나,
-     *  2. 현재 배정된 강의실 인원보다 많으면
+     * 1. 현재 수강신청한 인원보다 많거나,
+     * 2. 현재 배정된 강의실 인원보다 많으면
      * 새로운 인원 배정을 취소하고,
      * 위의 조건에 걸리지 않으면 수업의 정원을 바꿈.
-     * @param classNO 정원을 바꾸고자 하는 수업 번호
+     * 
+     * @param classNO      정원을 바꾸고자 하는 수업 번호
      * @param newPersonMax 새로 지정하고자 하는 정원
      * @return
      */
@@ -59,7 +59,8 @@ public class ClassDAO {
             if (rs.next()) {
                 String occupancy = rs.getString(3);
                 int newPersonMaxInt = Integer.parseInt(newPersonMax);
-                if (currentEnrolled > newPersonMaxInt || newPersonMaxInt > Integer.parseInt(occupancy) || newPersonMaxInt <= 0) {
+                if (currentEnrolled > newPersonMaxInt || newPersonMaxInt > Integer.parseInt(occupancy)
+                        || newPersonMaxInt <= 0) {
                     return 0;
                 } else {
                     String SQL2 = "update class\n" +
@@ -77,6 +78,5 @@ public class ClassDAO {
         }
         return -1;
     }
-
 
 }

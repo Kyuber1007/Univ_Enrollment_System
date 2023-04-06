@@ -12,9 +12,9 @@ public class StudentInfoDAO {
 
     public StudentInfoDAO() {
         try {
-            String dbURL = "jdbc:mysql://localhost:3307/DB2017029952?serverTimezone=Asia/Seoul";
+            String dbURL = "";
             String dbID = "root";
-            String dbPassword = "skyyeo83!";
+            String dbPassword = "";
             Class.forName("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection(dbURL, dbID, dbPassword);
         } catch (Exception e) {
@@ -24,6 +24,7 @@ public class StudentInfoDAO {
 
     /**
      * 학생의 전체 평균 학점을 계산하는 함수
+     * 
      * @param studentID
      * @return 평균 학점
      */

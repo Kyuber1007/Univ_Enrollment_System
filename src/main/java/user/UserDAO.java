@@ -14,9 +14,9 @@ public class UserDAO {
 
     public UserDAO() {
         try {
-            String dbURL = "jdbc:mysql://localhost:3307/DB2017029952?serverTimezone=Asia/Seoul";
+            String dbURL = "";
             String dbID = "root";
-            String dbPassword = "skyyeo83!";
+            String dbPassword = "";
             Class.forName("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection(dbURL, dbID, dbPassword);
         } catch (Exception e) {
@@ -39,7 +39,7 @@ public class UserDAO {
                 if (rs.getString(1).equals(userPassword)) {
                     if (rs.getString(2) != null)
                         if (rs.getString(2).equals(userType))
-                            return 1; //로그인 성공
+                            return 1; // 로그인 성공
                         else
                             return 0; // usertype 존재하는데 불일치
                     else

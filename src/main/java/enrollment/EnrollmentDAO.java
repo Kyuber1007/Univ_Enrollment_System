@@ -16,16 +16,15 @@ public class EnrollmentDAO {
 
     public EnrollmentDAO() {
         try {
-            String dbURL = "jdbc:mysql://localhost:3307/DB2017029952?serverTimezone=Asia/Seoul";
+            String dbURL = "";
             String dbID = "root";
-            String dbPassword = "skyyeo83!";
+            String dbPassword = "";
             Class.forName("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection(dbURL, dbID, dbPassword);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-
 
     /**
      * 수강신청을 희망하는 학생에 대해서 현재 해당 학생이 신청한 총 학점을 계산하여
@@ -47,14 +46,15 @@ public class EnrollmentDAO {
             if (rs.next()) {
                 if (Double.parseDouble(rs.getString(2)) + Double.parseDouble(credit) > 18) {
                     return -1;
-                } else return 1;
-            } else return 1;
+                } else
+                    return 1;
+            } else
+                return 1;
         } catch (Exception e) {
             e.printStackTrace();
             return 0;
         }
     }
-
 
     public boolean checkReEnrollmentBoolean(String studentID, String courseID) {
         String SQL = "select S.student_id, C.course_id, CR.grade\n" +
@@ -101,8 +101,10 @@ public class EnrollmentDAO {
                 String grade = rs.getString(3);
                 if (grade.equals("A+") || grade.equals("A0") || grade.equals("B+") || grade.equals("B0"))
                     return -2;
-                else return 10;
-            } else return 1;
+                else
+                    return 10;
+            } else
+                return 1;
         } catch (Exception e) {
             e.printStackTrace();
             return 0;
@@ -116,7 +118,7 @@ public class EnrollmentDAO {
      * @return 수강신청이 가능하면 1, 불가능하면 -3, database 오류라면 0을 return 함.
      */
     public int checkPersonMax(String classNO) {
-//        enrollment가 없을 때, SQL은 아무런 결과가 나오지 않음. 따라서, 구분해서 정의해야함.
+        // enrollment가 없을 때, SQL은 아무런 결과가 나오지 않음. 따라서, 구분해서 정의해야함.
         String SQL = "select CL.class_no, count(*)\n" +
                 "from class as CL, enrollment as E\n" +
                 "where CL.opened='2023' " +
@@ -170,12 +172,12 @@ public class EnrollmentDAO {
      */
     public int checkTimeAvailability(String studentID, String classNO) {
         TimeOperator timeOperator = new TimeOperator();
-//      현재 추가하고 싶은 수업
+        // 현재 추가하고 싶은 수업
         String SQL = "select group_concat(T.begin) as begin, group_concat(T.end) as end\n" +
                 "from time as T, class as CL\n" +
                 "where CL.class_no = ? and T.class_id = CL.class_id and CL.opened = '2023';";
 
-//        이전에 수강신청한 모든 수업
+        // 이전에 수강신청한 모든 수업
         String SQL2 = "select S.student_id, group_concat(T.begin) as begin, group_concat(T.end) as end\n" +
                 "from enrollment as E, student as S, Time as T, class as CL\n" +
                 "where T.class_id = CL.class_id\n" +
@@ -194,7 +196,8 @@ public class EnrollmentDAO {
             rs2 = pstmt.executeQuery();
             if (timeOperator.compareTimeWithRS(rs, rs2))
                 return 1;
-            else return -4;
+            else
+                return -4;
         } catch (Exception e) {
             e.printStackTrace();
             return 0;
@@ -220,7 +223,8 @@ public class EnrollmentDAO {
             rs = pstmt.executeQuery();
             if (rs.next()) {
                 return -5;
-            } else return 1;
+            } else
+                return 1;
         } catch (Exception e) {
             e.printStackTrace();
             return 0;
@@ -246,7 +250,8 @@ public class EnrollmentDAO {
             rs = pstmt.executeQuery();
             if (rs.next()) {
                 return -1;
-            } else return 1;
+            } else
+                return 1;
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -280,7 +285,6 @@ public class EnrollmentDAO {
         }
         return enrollClass(classNO, studentID, courseID, credit);
     }
-
 
     /**
      * 4개의 인자를 받아 수강신청.
@@ -373,7 +377,8 @@ public class EnrollmentDAO {
                 e.printStackTrace();
                 return 0;
             }
-        } else return -1;
+        } else
+            return -1;
     }
 
     /**

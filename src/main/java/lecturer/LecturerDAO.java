@@ -8,7 +8,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 
-
 /**
  * 교수 동작을 정의하는 class
  */
@@ -19,9 +18,9 @@ public class LecturerDAO {
 
     public LecturerDAO() {
         try {
-            String dbURL = "jdbc:mysql://localhost:3307/DB2017029952?serverTimezone=Asia/Seoul";
+            String dbURL = "";
             String dbID = "root";
-            String dbPassword = "skyyeo83!";
+            String dbPassword = "";
             Class.forName("com.mysql.jdbc.Driver");
             this.conn = DriverManager.getConnection(dbURL, dbID, dbPassword);
         } catch (Exception var4) {
@@ -53,6 +52,7 @@ public class LecturerDAO {
 
     /**
      * lecturer 전체를 보여줌
+     * 
      * @return
      */
     public ArrayList<Lecturer> showAllLecturer() {

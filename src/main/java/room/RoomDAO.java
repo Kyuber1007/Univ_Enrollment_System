@@ -13,15 +13,13 @@ public class RoomDAO {
     private PreparedStatement pstmt;
     private ResultSet rs;
 
-    public RoomDAO()
-    {
-        try{
-            String dbURL = "jdbc:mysql://localhost:3307/DB2017029952?serverTimezone=Asia/Seoul";
-            String dbID = "root";
-            String dbPassword = "skyyeo83!";
+    public RoomDAO() {
+        try {
+            String dbURL = "";
+            String dbPassword = "";
             Class.forName("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection(dbURL, dbID, dbPassword);
-        } catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

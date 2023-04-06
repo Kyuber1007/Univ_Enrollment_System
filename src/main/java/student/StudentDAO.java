@@ -15,9 +15,9 @@ public class StudentDAO {
 
     public StudentDAO() {
         try {
-            String dbURL = "jdbc:mysql://localhost:3307/DB2017029952?serverTimezone=Asia/Seoul";
+            String dbURL = "";
             String dbID = "root";
-            String dbPassword = "skyyeo83!";
+            String dbPassword = "!";
             Class.forName("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection(dbURL, dbID, dbPassword);
         } catch (Exception e) {
@@ -29,6 +29,7 @@ public class StudentDAO {
      * login 버튼을 클릭했을 때, 실행되는 함수
      * 해당 student_id 와 password를 가지는 학생이 있는지 검사하고,
      * 유형에 따라 다른 값들을 return 함.
+     * 
      * @param studentID
      * @param password
      * @return
@@ -41,7 +42,7 @@ public class StudentDAO {
             rs = pstmt.executeQuery();
             if (rs.next()) {
                 if (rs.getString(1).equals(password)) {
-                    return 1; //로그인 성공
+                    return 1; // 로그인 성공
                 } else {
                     return 0; // 비밀번호가 틀림
                 }
@@ -56,6 +57,7 @@ public class StudentDAO {
     /**
      * 학생이 본인의 정보를 수정하기 위해 정보를 요청할 때 호출되는 함수.
      * 즉, 학생 메인 페이지에서 정보 버튼을 클릭하면 호출됨.
+     * 
      * @param studentID
      * @return
      */
@@ -84,6 +86,7 @@ public class StudentDAO {
 
     /**
      * 학생이 본인의 정보 page 에서 비밀번호를 바꿀시 실행되는 함수
+     * 
      * @param studentID
      * @param password
      * @return

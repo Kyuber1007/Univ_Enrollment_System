@@ -18,9 +18,9 @@ public class SearchingDAO {
 
     public SearchingDAO() {
         try {
-            String dbURL = "jdbc:mysql://localhost:3307/DB2017029952?serverTimezone=Asia/Seoul";
+            String dbURL = "";
             String dbID = "root";
-            String dbPassword = "skyyeo83!";
+            String dbPassword = "";
             Class.forName("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection(dbURL, dbID, dbPassword);
         } catch (Exception e) {
@@ -32,6 +32,7 @@ public class SearchingDAO {
      * 검색을 할 때, 공통적으로 수행되는 부분을 묶어놓은 것
      * course_id, course_name, class_no를 가지고 검색한 result set 들을
      * 수강편람 형식에 맞게 모든 정보를 취합하여 출력하도록 함.
+     * 
      * @param rs
      * @return
      */
@@ -61,7 +62,7 @@ public class SearchingDAO {
                 }
 
                 searchingResult.setPersonMax(rs.getString(6));
-//              시간을 한개의 컬럼에 오도록 설정함.
+                // 시간을 한개의 컬럼에 오도록 설정함.
                 searchingResult.setTime(changeTimeFormat.showBeingEndToNormalForm(rs.getString(7), rs.getString(8)));
                 searchingResult.setBuildingName(rs.getString(9) + ", " + rs.getString(10));
                 list.add(searchingResult);
@@ -76,12 +77,14 @@ public class SearchingDAO {
     /**
      * searching with CourseName
      * 이름의 일부만 입력해도 결과를 출력하도록 구현
+     * 
      * @param courseName
      * @return
      */
     public ArrayList searchByCourseName(String courseName) {
         String SQL = "select CL.class_no, CO.course_id, \n" +
-                "CO.name, CL.credit, L.name, CL.person_max, group_concat(T.begin) as begin, group_concat(T.end) as end, \n" +
+                "CO.name, CL.credit, L.name, CL.person_max, group_concat(T.begin) as begin, group_concat(T.end) as end, \n"
+                +
                 "B.name as building, R.room_id\n" +
                 "from course as CO, class as CL, lecturer as L, time as T, room as R, Building as B\n" +
                 "where CO.course_id = CL.course_id \n" +
@@ -107,12 +110,14 @@ public class SearchingDAO {
 
     /**
      * course_id를 정확하게 입력하면 검색 결과를 내도록 구현
+     * 
      * @param courseID
      * @return
      */
     public ArrayList searchByCourseID(String courseID) {
         String SQL = "select CL.class_no, CO.course_id, \n" +
-                "CO.name, CL.credit, L.name, CL.person_max, group_concat(T.begin) as begin, group_concat(T.end) as end, \n" +
+                "CO.name, CL.credit, L.name, CL.person_max, group_concat(T.begin) as begin, group_concat(T.end) as end, \n"
+                +
                 "B.name as building, R.room_id\n" +
                 "from course as CO, class as CL, lecturer as L, time as T, room as R, Building as B\n" +
                 "where CO.course_id = ?\n" +
@@ -137,12 +142,14 @@ public class SearchingDAO {
 
     /**
      * 수업번호를 정확하게 입력하면 검색결과를 출력하도록 구현
+     * 
      * @param classNO
      * @return
      */
     public ArrayList searchByClassNO(String classNO) {
         String SQL = "select CL.class_no, CO.course_id, \n" +
-                "CO.name, CL.credit, L.name, CL.person_max, group_concat(T.begin) as begin, group_concat(T.end) as end, \n" +
+                "CO.name, CL.credit, L.name, CL.person_max, group_concat(T.begin) as begin, group_concat(T.end) as end, \n"
+                +
                 "B.name as building, R.room_id\n" +
                 "from course as CO, class as CL, lecturer as L, time as T, room as R, Building as B\n" +
                 "where CL.class_no = ?\n" +
@@ -167,11 +174,13 @@ public class SearchingDAO {
 
     /**
      * 검색화면에서 어떠한 것도 검색하지 않았을 때, 모든 개설된 수업들을 보여주기위한 함수
+     * 
      * @return
      */
     public ArrayList<SearchingResult> showAllClass() {
         String SQL = "select CL.class_no, CO.course_id, \n" +
-                "CO.name, CL.credit, L.name, CL.person_max, group_concat(T.begin) as begin, group_concat(T.end) as end, \n" +
+                "CO.name, CL.credit, L.name, CL.person_max, group_concat(T.begin) as begin, group_concat(T.end) as end, \n"
+                +
                 "B.name as building, R.room_id\n" +
                 "from course as CO, class as CL, lecturer as L, time as T, room as R, Building as B\n" +
                 "where CO.course_id = CL.course_id \n" +
@@ -195,7 +204,8 @@ public class SearchingDAO {
         String SQL = "select CL.class_no, CO.course_id, CO.name, CL.credit, L.name, CL.person_max, \n" +
                 "group_concat(T.begin) as begin, group_concat(T.end) as end\n" +
                 ",B.name as building, R.room_id\n" +
-                "from course as CO, class as CL, enrollment as E,lecturer as L, time as T, room as R, Building as B, Student as S\n" +
+                "from course as CO, class as CL, enrollment as E,lecturer as L, time as T, room as R, Building as B, Student as S\n"
+                +
                 "where E.student_id = S.student_id \n" +
                 "and CO.course_id = CL.course_id\n" +
                 "and S.student_id = ?\n" +
@@ -222,7 +232,8 @@ public class SearchingDAO {
         String SQL = "select CL.class_no, CO.course_id, CO.name, CL.credit, L.name, CL.person_max, \n" +
                 "group_concat(T.begin) as begin, group_concat(T.end) as end\n" +
                 ",B.name as building, R.room_id\n" +
-                "from course as CO, class as CL, wanted_enrollment as E,lecturer as L, time as T, room as R, Building as B, Student as S\n" +
+                "from course as CO, class as CL, wanted_enrollment as E,lecturer as L, time as T, room as R, Building as B, Student as S\n"
+                +
                 "where E.student_id = S.student_id \n" +
                 "and CO.course_id = CL.course_id\n" +
                 "and S.student_id = ?\n" +
